@@ -14,7 +14,7 @@ class AlterUsersdetailToDetailusersTable extends Migration
     public function up()
     {
         Schema::table('detailusers', function (Blueprint $table) {
-            Schema::rename("usersdetail", "detailusers");
+            Schema::rename("usersdetail", "detail_users");
         });
     }
 

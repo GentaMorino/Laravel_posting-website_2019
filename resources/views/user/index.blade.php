@@ -15,7 +15,8 @@
                     {{$myInfo->name}}
                 </div>
                 <div class="mt-4 text-left kai px-5">
-                    qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+                    testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+                    testtesttest
                     {{$myInfo->introduction}}
                 </div>  
         </div>

@@ -17,6 +17,7 @@ class DetailUser extends Model
 
     //関連づけ
     public function detailuser(){
+        //belongsTo :自分のテーブルに、相手テーブル.idの外部キーがある
         return $this->belongsTo('App\User');
     }
 }

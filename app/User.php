@@ -45,7 +45,8 @@ class User extends Authenticatable
 
     //関連づけ
     public function user(){
-        //hasManyだけど外部キーがUNIQUE。の時hasOne
+        //hasOne:hasManyだけど外部キーがUNIQUE。の時hasOne
+        //hasMany:相手テーブルに、自分テーブル.idへの外部キーがある。
         return $this->hasOne('App\DetailUser');
     }
 }

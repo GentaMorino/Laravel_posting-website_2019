@@ -18,10 +18,10 @@ class UsersController extends Controller
         $user = Auth::user();
         // 現在ログインしているユーザーのID取得
         //$id = Auth::id();
-
         //$myInfo=User::where('id',$id)->first();
         //$myInfo=User::find($id);
-        //dd($myInfo);
+        
+ 
         \Debugbar::info($user);
         return view('user.index', ['myInfo' => $user]);
     }
