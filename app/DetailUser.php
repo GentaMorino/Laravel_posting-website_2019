@@ -17,7 +17,6 @@ class DetailUser extends Model
 
     //関連づけ
     public function detailuser(){
-        //return $this->hasOne('App\User');
         return $this->belongsTo('App\User');
     }
 }

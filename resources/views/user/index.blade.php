@@ -9,14 +9,14 @@
         </div>
         <div class="col-6 text-center">
                 <div>
-                    <img src="images/test.jpg" class="img-fluid img-thumbnail rounded-pill" width="300" height="300" alt="画像がありません">
+                    <img src="images/test.jpg" class="img-fluid img-thumbnail rounded-pill" width="300" height="300" alt="">
                 </div>
                 <div class="h4">
                     {{$myInfo->name}}
                 </div>
                 <div class="mt-4 text-left kai px-5">
                     qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
-                    {{$myInfo->detailuser->introduction}}
+                    {{$myInfo->introduction}}
                 </div>  
         </div>
         <div class="col-3">

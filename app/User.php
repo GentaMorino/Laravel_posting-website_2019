@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     //関連づけ
     public function user(){
+        //hasManyだけど外部キーがUNIQUE。の時hasOne
         return $this->hasOne('App\DetailUser');
-        //return $this->hasMany('App\DetailUser');
     }
 }
