@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 //追加
 use App\DetailUser;
-use Illuminate\Database\Eloquent\Model;
+
 
 class User extends Authenticatable
 {
@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','introduction', 'img',
     ];
 
     /**
@@ -41,12 +41,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
+    public static $rules=array(
+        'img'=> 'file|image|mimes:jpeg,png,jpg,gif|max:3000',//3Mバイトまで
+        //追加
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255',
+        'password' => 'required|string|min:8|confirmed',
+    );
 
     //関連づけ
-    public function user(){
+    /*detailuserは削除、userに追加する。
+    理由はedit時にdetailuserが初めて作られるわけだが、
+    user情報は作られてるのに、detailuserが作られていないため、何かと都合が悪い
+    public function detailuser(){
         //hasOne:hasManyだけど外部キーがUNIQUE。の時hasOne
         //hasMany:相手テーブルに、自分テーブル.idへの外部キーがある。
         return $this->hasOne('App\DetailUser');
+    }
+    */
+    public function tabs(){
+        //相手テーブルに、自分テーブル.idへの外部キーがある。
+        return $this->hasMany('App\Tab'); 
     }
 }

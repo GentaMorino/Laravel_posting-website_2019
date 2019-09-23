@@ -12,10 +12,11 @@
                     カテゴリー
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">分類がはいる</a>
-                    <a class="dropdown-item" href="#">分類がはいる</a>
-                    <a class="dropdown-item" href="#">分類がはいる</a>
-                    <a class="dropdown-item" href="#">分類がはいる</a>
+                    @isset($classifications)
+                        @foreach($classifications as $classification)
+                            <a class="dropdown-item" href="#">{{$classification->classification}}</a>
+                        @endforeach
+                    @endisset
                 </div>
 
                 @guest
@@ -24,10 +25,10 @@
                     </li>
                 @else
                     <li class="nav-item active">
-                        <a class="nav-link" href="/user/">アカウント管理</a>
+                        <a class="nav-link" href="/user/index">アカウント管理</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">記事管理</a>
+                        <a class="nav-link" href="/story/manage">記事管理</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ route('logout') }}"
@@ -36,7 +37,7 @@
                             <!-- {{ __('Logout') }} -->
                         </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="/logout" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </li>

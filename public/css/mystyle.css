@@ -2,3 +2,11 @@
     overflow-wrap: break-word;
   
   }
+
+  /*fileup date用*/
+  .custom-file {
+    overflow: hidden;
+  }
+  .custom-file-label {
+    white-space: nowrap;
+  }

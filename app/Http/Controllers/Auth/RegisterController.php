@@ -69,4 +69,11 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    //効果なかった
+    public function pubvalidator(array $data)
+    {
+        return validator($data);
+    }
+    
 }

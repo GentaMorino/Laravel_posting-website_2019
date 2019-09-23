@@ -17,10 +17,10 @@ class CreateUsersdetailTable extends Migration
         
         Schema::create('usersdetail', function (Blueprint $table) {   
             $table->increments('id');
-            $table->integer('user_id')->unique();
-            $table->string('introduction')->nullable();;
-            $table->string('img')->nullable();;
-            $table->timestamps();
+            $table->integer('user_id')->unique()->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('introduction')->nullable();
+            $table->string('img')->nullable();
+            //$table->timestamps();
         });
     }
 

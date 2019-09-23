@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //return view('home');
+        //ここでログイン後、どこに行くのか
+        return view('story.index');
     }
 }

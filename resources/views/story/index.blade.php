@@ -2,45 +2,36 @@
 @section('title','TOPページ')
 @section('content')
 <div class="container-fluid">
-    <div class="card-deck m-3">
+<div class="card-deck m-3" >
+    @foreach($stories as $story)
+       
+    <div class="col-md-3">   
         <div class="card">
-            <a href="action('story\StoryesController@create')">
-                <img src="images/sample.jpg" class="card-img-top"  alt="...">
+            <a href="/story/detail?id={{$story->id}}">  
+                @if(isset($story['thumbnail']))      
+                    <img src="/{{$story->thumbnail}}"  class="img-fluid img-thumbnail"    alt="画像がありません" style="height: 11rem; width:30rem;">
+                @else     
+                    <img src="/storage/thumbnail/no.jpg" class="img-fluid img-thumbnail"  alt="画像がありません">
+                @endif
+            
+                <div class="card-body">
+                    <h3 class="card-title h4 text-dark">{{$story->detailarticle[0]['content']}}</h3>
+                    <h6 class="card-subtitle text-secondary">更新日 &nbsp; {{ date('Y年m月d日',strtotime($story['updated_at'])) }} </h6>
+                </div>
             </a>
-            <div class="card-body">
-                <h3 class="card-title h4"><a href="detail.html" class="text-dark">画像タイトル画像タイトル</a></h3>
-                <h6 class="card-subtitle text-secondary">更新日 &nbsp; 2019/9/5</h6>
-            </div>
-        </div>
-        <div class="card">
-            <a href="detail.html">
-                <img src="images/test.jpg" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-                <h3 class="card-title h4"><a href="detail.html" class="text-dark">画像タイトル画像タイトル</a></h3>
-                <h6 class="card-subtitle text-secondary">更新日 &nbsp; 2019/9/5</h6>
-            </div>
-        </div>
-        <div class="card">
-            <a href="detail.html">
-                <img src="images/sample.jpg" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-                <h3 class="card-title h4"><a href="detail.html" class="text-dark">画像タイトル画像タイトル</a></h3>
-                <h6 class="card-subtitle text-secondary">更新日 &nbsp; 2019/9/5</h6>
-            </div>
-        </div>
-        <div class="card">
-            <a href="detail.html">
-                <img src="images/sample.jpg" class="card-img-top" alt="...">
-            </a>
-            <div class="card-body">
-                <h3 class="card-title h4"><a href="detail.html" class="text-dark">画像タイトル画像タイトル</a></h3>
-                <h6 class="card-subtitle text-secondary">更新日 &nbsp; 2019/9/5</h6>
-            </div>
         </div>
     </div>
+    @endforeach
 </div>
+
+<div class="center-block">
+        {{ $stories->links() }}
+</div>
+
+          
+    
+</div>
+
 
 
 @endsection

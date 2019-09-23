@@ -22,6 +22,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            //追加
+            $table->string('introduction')->nullable();
+            $table->string('img')->nullable();
+
         });
     }
 
