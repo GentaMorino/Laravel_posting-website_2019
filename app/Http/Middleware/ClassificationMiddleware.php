@@ -19,10 +19,8 @@ class ClassificationMiddleware
      */
     public function handle($request, Closure $next)
     {
-        //$classifications=Classification::get();
-        //$response=$next($classifications);
-        
-        // 'classifications'=>$classifications
+        $classifications=Classification::get();
+        //$request->setContent($classifications);
         return $next($request);
     }
 }

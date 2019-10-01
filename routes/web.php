@@ -34,7 +34,8 @@ Route::group(['prefix'=>'story'],function(){
     Route::get('/add','Story\StoriesController@add')->middleware('auth');
     Route::post('/add','Story\StoriesController@create')->middleware('auth');
     //記事編集
-
+    Route::get('/edit','Story\StoriesController@edit')->middleware('auth');
+    Route::post('/edit','Story\StoriesController@update')->middleware('auth');
     //記事削除
     Route::post('/delete','Story\StoriesController@delete')->middleware('auth');
     //記事管理
@@ -43,7 +44,8 @@ Route::group(['prefix'=>'story'],function(){
     Route::post('/manage','Story\StoriesController@tab')->middleware('auth');
     //タブ削除
     Route::post('/delete-tab','Story\StoriesController@deleteTab')->middleware('auth');
-
+    //個人ページ閲覧
+    Route::get('/personal','Story\StoriesController@personal');
 
     
 });

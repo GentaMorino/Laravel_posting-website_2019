@@ -67,7 +67,9 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    //'timezone' => 'UTC',
+    //変更
+    'timezone' => 'Asia/Tokyo',
 
     /*
     |--------------------------------------------------------------------------
@@ -171,9 +173,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        //追加します
+        App\Providers\ClassificationServiceProvider::class,
+        
+        
 
     ],
 

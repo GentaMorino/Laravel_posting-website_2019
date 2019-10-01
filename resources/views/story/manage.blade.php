@@ -104,15 +104,15 @@
                        
                         <td style="width:150px">
                             @if(isset($story['thumbnail']))      
-                                <img src="/{{$story->thumbnail}}" class="img-fluid img-thumbnail"  alt="画像がありません">
+                                <img src="/{{$story->thumbnail}}" class="img-fluid img-thumbnail"  alt="画像がありません" style="height: 5rem; ">
                             @else     
-                                <img src="/storage/article_img/no.jpg" class="img-fluid img-thumbnail"  alt="画像がありません">
+                                <img src="/storage/article_img/no.jpg" class="img-fluid img-thumbnail"  alt="画像がありません" style="height: 5rem; ">
                             @endif
                         </td>
 
                         {{-- $story->classification['classification']  でclassifications['classification']　という風に”s”をつけたらなんかうまくいかない --}}
                         <td>{{$story->classification['classification']}}</td>
-                        <td>{{$story->tab}}</td>
+                        <td>{{$story->tab['tab']}}</td>
                         <td>{{$story->tag1 }}</td>
                         <td>{{$story->tag2 }}</td>
                         <td>{{$story->tag3 }}</td>
@@ -126,7 +126,8 @@
                         <td>{{ date('Y/m/d',strtotime($story['updated_at'])) }}</td>
 
                         <td>
-                            <a href="/story/edit" class="btn btn-primary btn-sm">編集</a>&nbsp;/&nbsp;    
+                            <a href="/story/edit?id={{$story->id}}" class="btn btn-primary btn-sm">編集</a>
+                            &nbsp;/&nbsp;    
                             <button type="button" class="btn btn-danger btn-sm " data-toggle="modal" data-target="#delete">
                                     削除
                             </button>
@@ -153,9 +154,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                        </td>
-                        
+                        </td>      
                     </tr>
                 @endforeach
             </tbody>

@@ -3,10 +3,22 @@
 @section('content')
 <div class="container">
 
-    <h4 class="mt-3 mb-2">作成者<span class="h5">&nbsp;&nbsp;更新日 &nbsp; {{ date('Y年m月d日',strtotime($detail_story['updated_at'])) }}</span></h4>
-    <h1 class="mt-1 mb-2　border-bottom">{{$detail_story->detailarticle[0]['content']}} </h1>
-    <a href="#" class="badge badge-pill badge-primary">タグ</a>
+    <a href="/story/personal?id={{$detail_story->user['id']}}">
+        <h4 class="mt-3 mb-2">＠{{$detail_story->user['name']}}
+    </a>
+    <span class="h6 text-muted">&nbsp;&nbsp;更新日 &nbsp; {{ date('Y年m月d日',strtotime($detail_story['updated_at'])) }}</span>
+    </h4>
+
+    <h1 class="mt-1 mb-2　border-bottom font-weight-bold">{{$detail_story->detailarticle[0]['content']}} </h1>
+    @for($i=1;$i<=5;$i++)
+        @isset($detail_story['tag'.$i])
+            <a href="/story/index?tag={{$detail_story['tag'.$i]}}" class="badge badge-pill badge-primary m-1">{{$detail_story['tag'.$i]}}</a>
+        @endisset
+    @endfor
+
+
     <hr>
+    
     @foreach($detail_story->detailarticle as $detailArticle)
         
         @if($detailArticle->structure_id == 2){{-- 2は段落 --}}

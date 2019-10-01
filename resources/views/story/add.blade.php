@@ -8,13 +8,16 @@
             <form class="mt-3" method="POST" action="/story/add" enctype="multipart/form-data" id="form">
                 {{csrf_field()}} 
                 <div class="mb-2 container-fluid">
-                    <input type="submit" class="btn btn-primary" value="更新登録">
+                    <input type="submit" class="btn btn-primary" value="登録">
                 </div>
 
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">Title</label>      
                     <div class="col-lg-8">
-                        <input type="text" class="form-control" id="title" name="stories[0][1]" value="">
+                        @if($errors->has('title'))
+                            {{$errors->first('title')}}
+                        @endif
+                        <input type="text" class="form-control" id="title" name="stories[0][1]" value="{{old('stories[0][1]')}}">
                     </div>
                 </div>
 
@@ -64,35 +67,38 @@
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">タグ</label>      
                     <div class="col-lg-8">
-                        <input type="text" class="form-control" id="tag1" name="tag1" value="">
+                        @if($errors->has('tag1'))
+                            {{$errors->first('tag1')}}
+                        @endif
+                        <input type="text" class="form-control" id="tag1" name="tag1" value="{{old('tag1')}}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">タグ</label>      
                     <div class="col-lg-8">
-                        <input type="text" class="form-control" id="tag2" name="tag2" value="">
+                        <input type="text" class="form-control" id="tag2" name="tag2" value="{{old('tag2')}}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">タグ</label>      
                     <div class="col-lg-8">
-                        <input type="text" class="form-control" id="tag3" name="tag3" value="">
+                        <input type="text" class="form-control" id="tag3" name="tag3" value="{{old('tag3')}}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">タグ</label>      
                     <div class="col-lg-8">
-                        <input type="text" class="form-control" id="tag4" name="tag4" value="">
+                        <input type="text" class="form-control" id="tag4" name="tag4" value="{{old('tag4')}}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">タグ</label>      
                     <div class="col-lg-8">
-                        <input type="text" class="form-control" id="tag5" name="tag5" value="">
+                        <input type="text" class="form-control" id="tag5" name="tag5" value="{{old('tag5')}}">
                     </div>
                 </div>
 
@@ -110,13 +116,15 @@
         <div class="col-lg-2">
             <nav class="navbar navbar-fixed-top" role="navigation">
                 <div class="container">
-                    <button type="button" class="btn btn-link" id="test">+追加</button>
                     <button type="button" class="btn btn-link" id="paragraph">+段落</button>
                     <button type="button" class="btn btn-link" id="letter">+文字</button>
                     <button type="button" class="btn btn-link" id="c_letter">+色文字</button>
+                 
+                    <!-- 将来的に実装
                     <button type="button" class="btn btn-link" id="s_letter">+太文字</button>
                     <button type="button" class="btn btn-link" id="">+画像</button>
                     <button type="button" class="btn btn-link" id="">+リンク</button>
+                    -->
                 </div>
             </nav>
             
@@ -129,10 +137,10 @@
     $i=2;
     $("#test").on("click",function(){ 
         $("#form").append(
-            $('<div class="form-group row" id="remove'+$i+'">'
+            $('<div class="form-group row">'
             +'<label for="1" class="col-lg-1 col-form-label">段落</label>'
             +'<div class="col-lg-8"><textarea class="form-control" rows="3" name=stories['+$i+'][3]></textarea></div>'
-            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger ">削除</button></div>'
+            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger"  onclick="return remove(this);" id="remove'+$i+'">削除</button></div>'
             +'</div>'));
         $i++
     });
@@ -142,10 +150,10 @@
     //2番段落
     $("#paragraph").on("click",function(){ 
         $("#form").append(
-            $('<div class="form-group row" id="remove'+$i+'">'
+            $('<div class="form-group row">'
             +'<label for="1" class="col-lg-1 col-form-label">段落</label>'
             +'<div class="col-lg-8"><textarea class="form-control" rows="2" name=stories['+$i+'][2]></textarea></div>'
-            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger ">削除</button></div>'
+            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger"  onclick="return remove(this);" id="remove'+$i+'">削除</button></div>'
             +'</div>'));
         $i++
     });
@@ -153,10 +161,10 @@
     //3番 文字
     $("#letter").on("click",function(){ 
         $("#form").append(
-            $('<div class="form-group row" id="remove'+$i+'">'
+            $('<div class="form-group row">'
             +'<label for="1" class="col-lg-1 col-form-label">文字</label>'
             +'<div class="col-lg-8"><textarea class="form-control" rows="3" name=stories['+$i+'][3]></textarea></div>'
-            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger ">削除</button></div>'
+            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger"  onclick="return remove(this);" id="remove'+$i+'">削除</button></div>'
             +'</div>'));
         $i++
     });
@@ -164,36 +172,35 @@
     //4番号　色文字（赤）
     $("#c_letter").on("click",function(){ 
         $("#form").append(
-            $('<div class="form-group row" id="remove'+$i+'">'
+            $('<div class="form-group row">'
             +'<label for="1" class="col-lg-1 col-form-label">色文字</label>'
             +'<div class="col-lg-8"><textarea class="form-control" rows="3" name=stories['+$i+'][4]></textarea></div>'
-            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger">削除</button></div>'
+            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger" onclick="return remove(this);" id="remove'+$i+'" >削除</button></div>'
             +'</div>'));
         $i++
     });
     
 
-
+    //未実装
+    /*
     $("#s_letter").on("click",function(){ 
         $("#form").append(
                 $('<div class="form-group row" id="remove'+$i+'"><label for="introduction" class="col-sm-2 col-form-label">大文字</label>'
                 +'<div class="col-sm-8"><textarea class="form-control" rows="3" name=stories['+$i+'][6]></textarea>'
-                +'<button type="button" class="btn btn-warning">削除</button>'
+                +'<button type="button" class="btn btn-warning"　>削除</button>'
                 +'</div></div>'));
         $i++
     });
+    */
 
     
 
 
+ 
 
-    
-    function remove(){   
-        //削除
-        //alert($(this).parent().html);
-        console.log($(this).parent("div"));
-        $(this).parent("div").remove();
-        
+    function remove(obj){   
+        remove_id=obj.getAttribute('id');
+        var test=$('#' + remove_id).parent().parent().remove();        
     }
  
   

@@ -47,6 +47,7 @@ class User extends Authenticatable
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255',
         'password' => 'required|string|min:8|confirmed',
+        'introduction'=>'max:1000',
     );
 
     //関連づけ
@@ -62,5 +63,10 @@ class User extends Authenticatable
     public function tabs(){
         //相手テーブルに、自分テーブル.idへの外部キーがある。
         return $this->hasMany('App\Tab'); 
+    }
+    //sつけないと値取れない
+    public function articles(){
+        //相手テーブルに、自分テーブル.idへの外部キーがある。
+        return $this->hasMany('App\Article'); 
     }
 }

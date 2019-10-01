@@ -13,11 +13,8 @@ class Tab extends Model
     public $timestamps = false;
 
     public static $rules=array(
-        //'img'=> 'file|image|mimes:jpeg,png,jpg,gif|max:3000',//3Mバイトまで
-
-        //'name' => 'required|string|max:255',
-        //'email' => 'required|string|email|max:255',
-        //'password' => 'required|string|min:8|confirmed',
+        //'user_id' => 'required',
+        'tab' => 'required|max:10',
     );
 
     public function articles(){

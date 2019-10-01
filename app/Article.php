@@ -12,6 +12,13 @@ class Article extends Model
     public static $rules=array(
         'user_id'=> 'required',
         'classification_id'=>'required',
+        'tab_id'=>'nullable|numeric',
+        'tag1' =>'nullable|max:15',
+        'tag2' =>'nullable|max:15',
+        'tag3' =>'nullable|max:15',
+        'tag4' =>'nullable|max:15',
+        'tag5' =>'nullable|max:15',
+        'thumbnail'=> 'file|image|mimes:jpeg,png,jpg,gif|max:3000',
         
     );
 
@@ -30,6 +37,11 @@ class Article extends Model
     public function tab(){
         //belongsTo :自分のテーブルに、相手テーブル.idの外部キーがある
         return $this->belongsTo('App\Tab');
+    }
+
+    public function user(){
+        //belongsTo :自分のテーブルに、相手テーブル.idの外部キーがある
+        return $this->belongsTo('App\User');
     }
 
 

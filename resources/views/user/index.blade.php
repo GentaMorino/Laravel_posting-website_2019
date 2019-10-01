@@ -22,8 +22,8 @@
                 </div>
 
                 <div class="mt-4 text-left kai px-5">
-                    {{$myInfo->introduction}}
-
+                    {!! nl2br(e($myInfo->introduction)) !!}
+           
                     <!--↓↓↓↓↓↓↓↓↓↓　　delete　　↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ -->
                     <div class="form-check mt-5">             
                         <button type="button" class="btn btn-warning btn-sm btn-block" data-toggle="modal" data-target="#delete">

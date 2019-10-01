@@ -11,23 +11,24 @@
                     data-toggle="dropdown">
                     カテゴリー
                 </a>
+               
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @isset($classifications)
                         @foreach($classifications as $classification)
-                            <a class="dropdown-item" href="#">{{$classification->classification}}</a>
+                            <a class="dropdown-item" href="/story/index?classification={{$classification->classification}}">{{$classification->classification}}</a>
                         @endforeach
                     @endisset
                 </div>
 
                 @guest
-                    <li class="nav-item active">
+                    <li class="nav-item active ">
                         <a class="nav-link" href="/login">ログイン</a>
                     </li>
                 @else
-                    <li class="nav-item active">
+                    <li class="nav-item active mr-3">
                         <a class="nav-link" href="/user/index">アカウント管理</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item active mr-3">
                         <a class="nav-link" href="/story/manage">記事管理</a>
                     </li>
                     <li class="nav-item active">
@@ -44,8 +45,9 @@
                 @endguest
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="キーワードを入力">
+        <form class="form-inline my-2 my-lg-0" action="/story/index" method="GET">
+            {{csrf_field()}} 
+            <input class="form-control mr-sm-2" type="search" placeholder="キーワードを入力" name="keyword">
             <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">検索</button>
         </form>
     </div>

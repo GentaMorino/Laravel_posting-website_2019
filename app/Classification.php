@@ -9,6 +9,10 @@ class Classification extends Model
     protected $guarded=array('id');
     public $timestamps = false;
 
+    public static $rules=array(
+        'classification'=> 'required',      
+    );
+
     public function article(){
         //相手テーブルに、自分テーブル.idへの外部キーがある。
         return $this->hasMany('App\Article');

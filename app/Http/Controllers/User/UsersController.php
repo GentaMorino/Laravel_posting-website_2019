@@ -54,7 +54,8 @@ class UsersController extends Controller
         }
         */
       
-        $this->validate($request, DetailUser::$rules);
+        //$this->validate($request, DetailUser::$rules);
+        $this->validate($request, User::$rules);
         //ユーザ情報
         $myInfo= Auth::user();
         //フォームから送られてきた情報

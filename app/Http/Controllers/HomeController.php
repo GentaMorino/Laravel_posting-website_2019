@@ -24,7 +24,8 @@ class HomeController extends Controller
     public function index()
     {
         //return view('home');
-        //ここでログイン後、どこに行くのか
-        return view('story.index');
+        //ここでログイン後、どこに行くのか!!
+        //return view('story.index');
+        return redirect('/');
     }
 }
