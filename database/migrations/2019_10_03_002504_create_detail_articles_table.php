@@ -14,12 +14,18 @@ class CreateDetailArticlesTable extends Migration
     public function up()
     {
         Schema::create('detail_articles', function (Blueprint $table) {
+  
             $table->increments('id');
-            $table->integer('article_id')->references('id')->on('articles')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('structure_id')->references('id')->on('structures')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('article_id')->unsigned();
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade')->onUpdate('cascade');
+
+            //$table->integer('structure_id')->references('id')->on('structures')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('structure_id')->unsigned();
+            $table->foreign('structure_id')->references('id')->on('structures')->onDelete('restrict')->onUpdate('restrict');
+            
             $table->text('content');
             $table->integer('number');
-            //$table->timestamps();
+            
         });
     }
 

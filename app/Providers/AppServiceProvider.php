@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //herokuデプロイ準備
+        //HTTPサーバーの設定
+        if (\App::environment('production')) {
+            \URL::forceScheme('https');
+        }
     }
 }

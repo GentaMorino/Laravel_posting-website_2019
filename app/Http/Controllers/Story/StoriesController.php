@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 //auth　id 取得用
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Validator;
 use App\Article;
 use App\DetailArticle;
 use App\Tab;
@@ -131,12 +131,8 @@ class StoriesController extends Controller
             'tabs'=>$tabs
         ]);
     }
+
     public function create(Request $request){//記事追加
-        /*-- -- */
-        //$this->validate($request, Article::$rules);
-        //$this->validate($request, DetailArticle::$rules);
-       
-        
         DB::transaction(function () use ($request) {
             $form=$request->all();
 
@@ -176,7 +172,7 @@ class StoriesController extends Controller
                 //読込:public/storage
              }
             //-----　　画像  -----  //
-         
+            $validator= Validator::make($article->toArray(),Article::$rules)->validate();
             $article->save();
             
             $article_id=$article->id;
@@ -197,26 +193,30 @@ class StoriesController extends Controller
                 //dd($key);>０
                 //dd($val);>array:1 [▼"paragraph" => "タイトルです"]
                
-                foreach($val as $structure =>$content)
-                //dd($structure);>"paragraph"
-                //dd($content);>"タイトルです"
-               
-                $detail_article=new DetailArticle;    
-                $detail_article->article_id = $article_id;
-                $detail_article->structure_id =$structure;
-                $detail_article->content=$content;
-                $detail_article->number=$key;
+                foreach($val as $structure =>$content){
+                    //dd($structure);>"paragraph"
+                    //dd($content);>"タイトルです"
+                
+                    $detail_article=new DetailArticle;    
+                    $detail_article->article_id = $article_id;
+                    $detail_article->structure_id =$structure;
+                    $detail_article->content=$content;
+                    $detail_article->number=$key;
 
-                $detail_article->save();
-              }
+                    $validator= Validator::make($detail_article->toArray(),DetailArticle::$rules)->validate();
+                    $detail_article->save();
+                }
+            }
         });
 
         return redirect('/story/manage');
     }
 
     public function edit(Request $request){
+        
         $articles=Article::find($request['id']);
         $classifications=Classification::orderBy('id','asc')->get();
+        $tabs=Tab::where('user_id',Auth::id())->get();
         
         /*dd($articles->detailArticle);
         Collection {#510 ▼
@@ -225,18 +225,20 @@ class StoriesController extends Controller
         */
         return view('/story.edit')->with([
             'articles'=>$articles,
-            'classifications'=>$classifications
+            'classifications'=>$classifications,
+            'tabs'=>$tabs
         ]);
     }//編集
 
     //編集
     public function update(Request $request){
-        DB::transaction(function () use ($request) {
+        $transaction=DB::transaction(function () use ($request) {
             //$  validate
             $article_id=$request->id;
             $article=Article::find($article_id);
             $user_id = Auth::id();
             $form=$request->all();
+           
             unset($form['__token']);
 
             $article->user_id=$user_id;
@@ -282,7 +284,14 @@ class StoriesController extends Controller
                 //保存:storage/app/public
                 //読込:public/storage
              }
-        
+           
+            $validator= Validator::make($article->toArray(),Article::$rules)->validate();
+       
+            /*この書き方だとトランザクション強制終了なので注意！
+            if($validator->fails()){
+                //return redirect()->back()->withErrors($validator)->withInput();
+            }
+            */
             $article->save();
             //ここから内容
             DetailArticle::where('article_id',$article_id)->delete();
@@ -307,28 +316,36 @@ class StoriesController extends Controller
                 //dd($key);>０
                 //dd($val);>array:1 [▼"paragraph" => "タイトルです"]
                
-                foreach($val as $structure =>$content)
-                //dd($structure);>"paragraph"
-                //dd($content);>"タイトルです"
+                foreach($val as $structure =>$content){
+                    //dd($structure);>"paragraph"
+                    //dd($content);>"タイトルです"
                
-                $detail_article=new DetailArticle;    
-                $detail_article->article_id = $article_id;
-                $detail_article->structure_id =$structure;
-                $detail_article->content=$content;
-                $detail_article->number=$key;
+                    $detail_article=new DetailArticle;    
+                    $detail_article->article_id = $article_id;
+                    $detail_article->structure_id =$structure;
+                    $detail_article->content=$content;
+                    $detail_article->number=$key;
 
-                $detail_article->save();
-              }
-
+                    $validator= Validator::make($detail_article->toArray(),DetailArticle::$rules)->validate();
+   
+                    $detail_article->save();
+                }
+                
+            }
+              
+            return 'success';
+            
         });
-        return redirect('/story/manage');
-    }
+        if($transaction == 'success'){
+            return redirect('/story/manage');
+        }else{
+            return $transaction;
+        }
+    
+    }//編集
     
 
     public function detail(Request $request){
-        /*
-        $detail_story=Article::where('id',$request->id)->first();
-        */
         $detail_story=Article::where('id',$request->id)->whereHas('DetailArticle',function($q){
             $q->orderBy('number','asc');
         })->first();

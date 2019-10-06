@@ -27,7 +27,7 @@ class ClassificationServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function($view) {
-            $classifications=Classification::get();
+            $classifications=Classification::orderBy('id','asc')->get();
             $view->with('classifications',$classifications);
         });
     }

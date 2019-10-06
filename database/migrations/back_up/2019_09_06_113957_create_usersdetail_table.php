@@ -16,10 +16,12 @@ class CreateUsersdetailTable extends Migration
         
         
         Schema::create('usersdetail', function (Blueprint $table) {   
+            /*削除
             $table->increments('id');
             $table->integer('user_id')->unique()->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('introduction')->nullable();
             $table->string('img')->nullable();
+            */
             //$table->timestamps();
         });
     }

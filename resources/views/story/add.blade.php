@@ -7,6 +7,15 @@
         <div class="col-lg-10">
             <form class="mt-3" method="POST" action="/story/add" enctype="multipart/form-data" id="form">
                 {{csrf_field()}} 
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="mb-2 container-fluid">
                     <input type="submit" class="btn btn-primary" value="登録">
                 </div>
@@ -14,10 +23,11 @@
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">Title</label>      
                     <div class="col-lg-8">
+                        {{-- validation エラー--}}
                         @if($errors->has('title'))
                             {{$errors->first('title')}}
                         @endif
-                        <input type="text" class="form-control" id="title" name="stories[0][1]" value="{{old('stories[0][1]')}}">
+                        <input type="text" class="form-control" id="title" name="stories[0][1]" value="{{old('stories.0.1')}}">
                     </div>
                 </div>
 
@@ -148,6 +158,7 @@
 
     ////////////////////
     //2番段落
+    /*
     $("#paragraph").on("click",function(){ 
         $("#form").append(
             $('<div class="form-group row">'
@@ -157,6 +168,19 @@
             +'</div>'));
         $i++
     });
+    */
+    //2番段落
+    $("#paragraph").on("click",function(){ 
+        $("#form").append(
+            $('<div class="form-group row">'
+            +'<label for="1" class="col-lg-1 col-form-label">段落</label>'
+            +'<div class="col-lg-8"><textarea class="form-control" rows="2" name=stories['+$i+'][2]>{{old('stories.1.2')}}</textarea></div>'
+            +'<div class="col-lg-1"><button type="button" class="btn btn-outline-danger"  onclick="return remove(this);" id="remove'+$i+'">削除</button></div>'
+            +'</div>'));
+        $i++
+    });
+
+
 
     //3番 文字
     $("#letter").on("click",function(){ 
@@ -197,7 +221,7 @@
 
 
  
-
+//要素の削除
     function remove(obj){   
         remove_id=obj.getAttribute('id');
         var test=$('#' + remove_id).parent().parent().remove();        

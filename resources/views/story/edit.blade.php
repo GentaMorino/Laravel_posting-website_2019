@@ -7,6 +7,15 @@
         <div class="col-lg-10">
             <form class="mt-3" method="POST" action="/story/edit" enctype="multipart/form-data" id="form">
                 {{csrf_field()}} 
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <input type="hidden" name="id" value={{$articles->id}}>
 
                 <div class="mb-2 container-fluid">
@@ -16,6 +25,10 @@
                 <div class="form-group row">
                     <label for="name" class="col-lg-1 col-form-label">Title</label>      
                     <div class="col-lg-8">
+                        {{-- validation エラー--}}
+                        @if($errors->has('title'))
+                            {{$errors->first('title')}}
+                        @endif
                         <input type="text" class="form-control" id="title" name="stories[0][1]" value="{{old('stories[0][1]',$articles->detailArticle[0]['content'])}}">
                     </div>
                 </div>
@@ -46,7 +59,9 @@
                     <div class="col-lg-8">
                         <select class="form-control" id="classification" name="classification">
                             @foreach($classifications as $classification)
-                                <option value="{{$classification->id}}" >{{$classification->classification}}</option>
+                                <option value="{{$classification->id}}" @if($classification->id ==$articles->classification_id)selected @endif >
+                                    {{$classification->classification}}
+                                </option>
                             @endforeach
                         </select>
                     </div>
