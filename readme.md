@@ -21,5 +21,3 @@
 * 記事投稿、編集、閲覧、削除機能
 * 画像投稿機能
 
-# データベース
-![DB.png](https://github.com/GentaMorino/Laravel_posting-website_2019/blob/master/DB.png)
