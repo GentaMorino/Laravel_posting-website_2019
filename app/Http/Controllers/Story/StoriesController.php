@@ -260,7 +260,8 @@ class StoriesController extends Controller
             }else{
                 $article->recommended=false;
             }
-
+            $validator= Validator::make($article->toArray(),Article::$rules)->validate();
+            
             if(isset($form['thumbnail'])) {
                 //画像削除
                 $delete=str_replace('storage/thumbnail/','',$article->thumbnail);
@@ -285,7 +286,7 @@ class StoriesController extends Controller
                 //読込:public/storage
              }
            
-            $validator= Validator::make($article->toArray(),Article::$rules)->validate();
+            
        
             /*この書き方だとトランザクション強制終了なので注意！
             if($validator->fails()){
