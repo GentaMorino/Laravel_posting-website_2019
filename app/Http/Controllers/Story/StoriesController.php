@@ -76,7 +76,6 @@ class StoriesController extends Controller
                     'keyword'=>$keyword,
                     'page'=>$page,
                 ]);
-
             }
         }else{//デフォルト、検索してない
             return view('/story.index')->with([
@@ -116,7 +115,8 @@ class StoriesController extends Controller
         $tab->tab=$form['tab'];
         $tab->save();
         return redirect('/story/manage');
-    }
+    }//public function tab 終了
+
     public function deleteTab(Request $request){//Tab削除用
         $tab=Tab::find($request->id)->delete();
         return redirect('/story/manage');
@@ -134,8 +134,12 @@ class StoriesController extends Controller
 
     public function create(Request $request){//記事追加
         DB::transaction(function () use ($request) {
-            $form=$request->all();
+            ////画像用validation
+            $validator=Validator::make($request->all(),[
+                'thumbnail'=> 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:3000',
+            ])->validate();
 
+            $form=$request->all();
             $article = new Article();
             $id = Auth::id();
             $article->user_id = $id;
@@ -151,8 +155,10 @@ class StoriesController extends Controller
             }else{
                 $article->recommended=false;
             }
-    
-            //画像       
+
+           
+
+            //-----　　ここから画像  -----  //      
             if(isset($form['thumbnail'])) {
                 
                 $thumbnail=$form['thumbnail'];
@@ -171,7 +177,8 @@ class StoriesController extends Controller
                 //保存:storage/app/public
                 //読込:public/storage
              }
-            //-----　　画像  -----  //
+            //-----　　ここまで画像  -----  //
+            
             $validator= Validator::make($article->toArray(),Article::$rules)->validate();
             $article->save();
             
@@ -233,7 +240,12 @@ class StoriesController extends Controller
     //編集
     public function update(Request $request){
         $transaction=DB::transaction(function () use ($request) {
-            //$  validate
+            //画像用validation
+            $validator=Validator::make($request->all(),[
+                'thumbnail'=> 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:3000',
+            ])->validate();
+          
+
             $article_id=$request->id;
             $article=Article::find($article_id);
             $user_id = Auth::id();
@@ -260,8 +272,9 @@ class StoriesController extends Controller
             }else{
                 $article->recommended=false;
             }
-            $validator= Validator::make($article->toArray(),Article::$rules)->validate();
             
+            //$validator= Validator::make($article->toArray(),Article::$rules)->validate();
+
             if(isset($form['thumbnail'])) {
                 //画像削除
                 $delete=str_replace('storage/thumbnail/','',$article->thumbnail);
@@ -286,14 +299,15 @@ class StoriesController extends Controller
                 //読込:public/storage
              }
            
-            
-       
             /*この書き方だとトランザクション強制終了なので注意！
             if($validator->fails()){
                 //return redirect()->back()->withErrors($validator)->withInput();
             }
             */
+            $validator= Validator::make($article->toArray(),Article::$rules)->validate();
+      
             $article->save();
+
             //ここから内容
             DetailArticle::where('article_id',$article_id)->delete();
 

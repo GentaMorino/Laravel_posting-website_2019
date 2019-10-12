@@ -4,13 +4,13 @@
 従来の記事投稿サイトはmarkdown記法を採用しているが、markdownを知らなくても,<br>
 誰でも見るだけで記事が作成できるような形で作りたいと思ったため。<br>
 
-# 環境
+# 作業環境
 * 90時間程度
 * PHP 7.3.7-2
 * Laravel Framework 5.8.30
 * MySQL 5.7.27
-* jQuery
-* Bootstrap
+* jQuery 3.4.1
+* Bootstrap 4.3.1
 * VirtualBox + Vagrant + Homestead + Composer<br>
 
 # 機能一覧

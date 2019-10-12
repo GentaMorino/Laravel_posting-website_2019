@@ -14,7 +14,7 @@ class DetailArticle extends Model
         //追加
         'article_id' => 'required',
         'structure_id' => 'required',
-        'content' => 'required|max:500',
+        'content' => 'required|max:1000',
         'number'=>'required',
     );
 

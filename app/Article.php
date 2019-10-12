@@ -18,7 +18,8 @@ class Article extends Model
         'tag3' =>'nullable|max:15',
         'tag4' =>'nullable|max:15',
         'tag5' =>'nullable|max:15',
-        'thumbnail'=> 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:3000',
+        //画像用validatationはコントローラ側で組むように変更
+        //'thumbnail'=> 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:3000',
         
     );
 
